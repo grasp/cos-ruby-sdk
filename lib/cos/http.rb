@@ -39,12 +39,13 @@ module COS
 
     # 发送请求
     def do_request(method, path, headers, signature = nil, payload = nil)
-
+      puts "hello, do request ........."
       # 整理头部信息
       headers['content-type']  ||= DEFAULT_CONTENT_TYPE
       headers['user-agent']    = get_user_agent
       headers['authorization'] = signature
       headers['accept']        = 'application/json'
+      headers['host']          =@config.host
 
       # 请求地址
       url = "#{config.api_base}#{path}"
@@ -59,18 +60,9 @@ module COS
           :payload      => payload,
           :open_timeout => @config.open_timeout || OPEN_TIMEOUT,
           :timeout      => @config.read_timeout || READ_TIMEOUT
-      ) do |resp, request, result, &blk|
+      ) 
 
-        # 捕获异常
-        if resp.code >= 300
-          e = ServerError.new(resp)
-          logger.warn(e.to_s)
-          raise e
-        else
-          resp.return!(request, result, &blk)
-        end
 
-      end
 
       logger.debug("Received HTTP response, code: #{response.code}, headers: " \
                       "#{response.headers}, body: #{response.body}")

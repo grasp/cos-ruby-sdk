@@ -65,7 +65,7 @@ module COS
 
       @protocol ||= 'http'
       @host     ||= DEFAULT_HOST
-      @api_base = "#{@protocol}://#{@host}/files/v1"
+      @api_base = "#{@protocol}://#{@host}/files/v2"
       @multiple_sign_expire ||= DEFAULT_MULTIPLE_SIGN_EXPIRE
     end
 
